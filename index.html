@@ -1,0 +1,38 @@
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>Tramway Oran</title>
+    <meta name="description" content="Carte Tramway Oran">
+
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+    <script src="leaflet/leaflet.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+        background-color: #eeeeee;
+      }
+      #mapid {
+        height: 300px;
+        width: 1000px;
+      }
+    </style>
+
+
+  </head>
+
+  <body>
+    <div id="mapid"></div>
+    <script>
+      var mymap = L.map('mapid').setView([35.66, -0.64], 13);
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mymap);
+    </script>
+  </body>
+</html>
