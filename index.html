@@ -10,8 +10,6 @@
 
     <link rel="stylesheet" href="./leaflet/leaflet.css" />
     <script src="./leaflet/leaflet.js"></script>
-    <script src="./sql.js"></script>
-    <script src="./Leaflet.TileLayer.MBTiles-master/Leaflet.TileLayer.MBTiles.js"></script>
 
     <style>
       body {
@@ -33,18 +31,11 @@
   <body>
     <div id="mapid"></div>
     <script>
-      var mymap = L.map('mapid').fitWorld();
-      var mb = L.tileLayer.mbTiles('./2017-07-03_algeria_oran.mbtiles', {
-        minZoom: 0,
-        maxZoom: 6
+      var mymap = L.map('mapid').setView([35.7, -0.6], 13);
+      L.tileLayer('./oran/{z}/{x}/{y}.png', {
+        maxZoom: 17
       }).addTo(mymap);
-/*
-      mb.on('databaseloaded', function(ev) {
-        console.info('MBTiles DB loaded', ev);
-      });
-      mb.on('databaseerror', function(ev) {
-        console.info('MBTiles DB error', ev);
-      });*/
+
     </script>
   </body>
 </html>
