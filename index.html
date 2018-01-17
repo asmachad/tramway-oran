@@ -10,11 +10,12 @@
 
   <link rel="stylesheet" href="./leaflet/leaflet.css" />
   <script src="./leaflet/leaflet.js"></script>
+  <script src="./leaflet-geometryutil.js"></script>
 
   <style>
   body {
-    margin: 0;
-    font-family: 'Roboto', 'Noto', sans-serif;
+   margin: 0;
+   font-family: 'Roboto', 'Noto', sans-serif;
         /*line-height: 1.5;
         min-height: 100vh;*/
         background-color: #eeeeee;
@@ -35,6 +36,74 @@
         top: 20px;
         left: 5%;
       }
+      .calcul {
+        position: absolute;
+        top: 440px;
+        padding: 20px;
+      }
+      
+      /* Custom dropdown */
+      .custom-dropdown {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 10px; /* demo only */
+      }
+
+      .custom-dropdown select {
+        background-color: #27ae60;
+        color: #fff;
+        font-size: inherit;
+        padding: .5em;
+        padding-right: 2.5em; 
+        border: 0;
+        margin: 0;
+        border-radius: 3px;
+        text-indent: 0.01px;
+        text-overflow: '';
+        -webkit-appearance: button; /* hide default arrow in chrome OSX */
+      }
+
+      .custom-dropdown::before,
+      .custom-dropdown::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .custom-dropdown::after { /*  Custom dropdown arrow */
+        content: "\25BC";
+        height: 1em;
+        font-size: .625em;
+        line-height: 1;
+        right: 1.2em;
+        top: 50%;
+        margin-top: -.5em;
+      }
+
+      .custom-dropdown::before { /*  Custom dropdown arrow cover */
+        width: 2em;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 0 3px 3px 0;
+      }
+
+      .custom-dropdown select[disabled] {
+        color: rgba(0,0,0,.3);
+      }
+
+      .custom-dropdown select[disabled]::after {
+        color: rgba(0,0,0,.1);
+      }
+
+      .custom-dropdown::before {
+        background-color: rgba(0,0,0,.15);
+      }
+
+      .custom-dropdown::after {
+        color: rgba(0,0,0,.4);
+      }
     </style>
 
 
@@ -43,7 +112,19 @@
   <body>
     <div class="big_container">
       <div id="mapid"></div>
-      
+      <div class="calcul">
+        <div>Trouvez votre itinéraire</div>
+        <span class="custom-dropdown">
+          <select>
+              <option>Sherlock Holmes</option>
+              <option>The Great Gatsby</option>  
+              <option>V for Vendetta</option>
+              <option>The Wolf of Wallstreet</option>
+              <option>Quantum of Solace</option>
+          </select>
+        </span>
+
+      </div>
     </div>
     <script>
       //créer la carte
@@ -146,21 +227,8 @@
       
       //ajouter le chemin à la carte
       var chemin = L.polyline(tab_chemin, {color: 'blue'}).addTo(mymap);
-/*
 
-      //créer un marqueur
-      var marker1 = L.marker([35.642391, -0.617187]).addTo(mymap);
-      //associé un popup au marqueur
-      marker1.bindPopup("<b>Université Es Sénia</b><br>35.642391, -0.617187");
-      //popup apparait au survol sur le marqueur
-      marker1.on('mouseover', function (e) {
-        this.openPopup();
-      });
-      //popup disparait après survol
-      marker1.on('mouseout', function (e) {
-        this.closePopup();
-      });
-      */
+      //affichage des stations
       var marqueur;
       var infoBulle;
       for (var i = 0; i < tab_chemin.length; i++) {
@@ -184,6 +252,22 @@
         }
       }
 
-    </script>
-  </body>
-  </html>
+
+      function longChemin(coords) {
+        var long = 0;
+        var point1, point2;
+
+          //console.log(point);
+          for (var i = 1; i < coords.length; i++) {
+            point1 = coords[i-1];
+            point2 = coords[i]
+            long = long + mymap.distance(point1, point2);
+          }
+          return long;
+        }
+
+        console.log(longChemin(tab_chemin));
+
+      </script>
+    </body>
+    </html>
